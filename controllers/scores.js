@@ -1,7 +1,7 @@
 const scoresRouter = require("express").Router();
 const Score = require("../models/score");
 
-const scores = [
+let scores = [
   {
     id: 0,
     score: 0,
@@ -22,5 +22,12 @@ scoresRouter.get('/:id', (req, res) => {
     res.status(404).end()
   }
 });
+
+scoresRouter.delete('/:id', (req, res) => {
+  const id = Number(req.params.id)
+  scores = scores.filter(score => score.id !== id)
+
+  res.status(204).end()
+})
 
 module.exports = scoresRouter
