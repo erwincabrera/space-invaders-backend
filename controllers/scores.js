@@ -30,4 +30,22 @@ scoresRouter.delete('/:id', (req, res) => {
   res.status(204).end()
 })
 
+scoresRouter.post('/', (req, res) => {
+  const newScore = req.body
+
+  if (newScore.score == undefined || newScore.date == undefined) {
+    return res.status(400).json({
+      error: 'content missing'
+    })
+  }
+
+  scores = scores.concat({
+    id: Math.max(...scores.map(score => score.id)) + 1,
+    score: newScore.score,
+    date: newScore.date
+  })
+
+  res.json(newScore)
+})
+
 module.exports = scoresRouter
