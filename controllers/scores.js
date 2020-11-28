@@ -35,12 +35,6 @@ scoresRouter.delete('/:id', (req, res, next) => {
 scoresRouter.post('/', (req, res, next) => {
   const newScore = req.body
 
-  if (newScore.score == undefined) {
-    return res.status(400).json({
-      error: 'content missing'
-    })
-  }
-
   const score = new Score({
     score: newScore.score,
     date: new Date()
