@@ -1,5 +1,6 @@
 const scoresRouter = require("express").Router();
 const Score = require("../models/score");
+const logger = require("../utils/logger");
 
 scoresRouter.get('/', (req, res) => {
   Score.find({}).then(scores => {
@@ -8,13 +9,16 @@ scoresRouter.get('/', (req, res) => {
 })
 
 scoresRouter.get('/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const score = scores.find(score => score.id === id)
-  if (score != undefined) {
-    res.json(score)
-  } else {
-    res.status(404).end()
-  }
+  Score.findById(req.params.id).then(score => {
+    if (score) {
+      res.json(score)
+    } else {
+      res.status(404).end()
+    }
+  }).catch(err => {
+    logger.error(err)
+    res.status(400).send({error: "malformatted id"})
+  })
 });
 
 scoresRouter.delete('/:id', (req, res) => {
