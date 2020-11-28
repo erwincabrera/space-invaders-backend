@@ -13,5 +13,6 @@ app.use('/api/users', usersRouter);
 app.use('/api/scores', scoresRouter);
 
 app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 module.exports = app
