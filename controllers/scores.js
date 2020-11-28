@@ -22,8 +22,11 @@ scoresRouter.get('/:id', (req, res) => {
 });
 
 scoresRouter.delete('/:id', (req, res) => {
-  const id = Number(req.params.id)
-  scores = scores.filter(score => score.id !== id)
+  Score.findByIdAndRemove(req.params.id)
+    .then(_ => {
+      res.status(204).end()
+    })
+    .catch(err => logger.error(err))
 
   res.status(204).end()
 })
