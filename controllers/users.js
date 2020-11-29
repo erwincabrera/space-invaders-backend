@@ -1,4 +1,6 @@
 const usersRouter = require("express").Router();
+const bcrypt = require("bcrypt");
+const User = require("../models/user");
 
 const users = [
   {
@@ -87,10 +89,20 @@ usersRouter.get("/", (req, res) => {
   res.json(users);
 });
 
-usersRouter.post("/", (req, res) => {
-  const user = req.body;
+usersRouter.post("/", (req, res, next) => {
+  const body = req.body;
+  const saltRounds = 10;
 
-  res.json(user);
+  const saveUser = (passwordHash) => new User({
+    username: body.username,
+    name: body.name,
+    passwordHash
+  }).save()
+
+  bcrypt.hash(body.password, saltRounds)
+    .then(saveUser)
+    .then(savedUser => res.json(savedUser))
+    .catch(next);
 });
 
 module.exports = usersRouter
