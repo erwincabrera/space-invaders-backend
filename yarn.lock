@@ -92,6 +92,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+bcrpyt@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/bcrpyt/-/bcrpyt-2.0.0.tgz#67a22ef871b95e391c9da4e2b944771737753db4"
+  integrity sha1-Z6Iu+HG5XjkcnaTiuUR3Fzd1PbQ=
+
 bcrypt@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/bcrypt/-/bcrypt-5.0.0.tgz#051407c7cd5ffbfb773d541ca3760ea0754e37e2"
