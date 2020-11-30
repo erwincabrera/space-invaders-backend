@@ -1,5 +1,6 @@
 const scoresRouter = require("express").Router();
 const Score = require("../models/score");
+const User = require("../models/user");
 const logger = require("../utils/logger");
 
 scoresRouter.get('/', (req, res, next) => {
@@ -32,19 +33,24 @@ scoresRouter.delete('/:id', (req, res, next) => {
   res.status(204).end()
 })
 
-scoresRouter.post('/', (req, res, next) => {
-  const newScore = req.body
+scoresRouter.post('/', async (req, res, next) => {
+  try {
+    const body = req.body;
+    const user = await User.findById(body.userId);
+    const savedScore = await new Score({
+      score: body.score,
+      date: new Date(),
+      user: user._id
+    }).save();
 
-  const score = new Score({
-    score: newScore.score,
-    date: new Date()
-  })
+    user.scores = [...user.scores, savedScore._id];
+    await user.save();
 
-  score.save()
-    .then(savedScore => {
-      res.json(savedScore)
-    })
-    .catch(err => next(err))
-})
+    res.json(savedScore);
+    
+  } catch(err) {
+    next(err);
+  }
+});
 
 module.exports = scoresRouter
