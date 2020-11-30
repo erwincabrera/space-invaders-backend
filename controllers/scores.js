@@ -3,12 +3,17 @@ const Score = require("../models/score");
 const User = require("../models/user");
 const logger = require("../utils/logger");
 
-scoresRouter.get('/', (req, res, next) => {
-  Score.find({})
-    .then(scores => {
-      res.json(scores)
-    })
-    .catch(err => next(err))
+scoresRouter.get('/', async (req, res, next) => {
+  try {
+    const scores = await Score
+      .find({})
+      .populate('user', { username: 1 });
+
+    res.json(scores);
+
+  } catch(err) {
+    next(err);
+  }
 })
 
 scoresRouter.get('/:id', (req, res, next) => {
@@ -47,7 +52,7 @@ scoresRouter.post('/', async (req, res, next) => {
     await user.save();
 
     res.json(savedScore);
-    
+
   } catch(err) {
     next(err);
   }
