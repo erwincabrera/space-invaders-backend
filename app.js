@@ -8,7 +8,6 @@ const loginRouter = require("./controllers/login");
 const app = express();
 
 app.use(cors());
-app.use(express.static('build'));
 app.use(express.json());
 app.use('/api/login', loginRouter);
 app.use('/api/users', usersRouter);
