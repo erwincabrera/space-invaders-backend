@@ -1,7 +1,7 @@
 const scoresRouter = require("express").Router();
 const Score = require("../models/score");
 const User = require("../models/user");
-const logger = require("../utils/logger");
+const jwt = require("jsonwebtoken");
 
 scoresRouter.get('/', async (req, res, next) => {
   try {
@@ -38,10 +38,32 @@ scoresRouter.delete('/:id', (req, res, next) => {
   res.status(204).end()
 })
 
+const getTokenFrom = (req) => {
+  const authorization = req.get('authorization');
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7);
+  }
+
+  return null;
+}
+
 scoresRouter.post('/', async (req, res, next) => {
+  const invalidToken = () => {
+    return res.status(401).json({
+      error: 'Token missing or invalid.'
+    })
+  }
+
   try {
     const body = req.body;
-    const user = await User.findById(body.userId);
+    const token = getTokenFrom(req);
+
+    if (!token) return invalidToken();
+
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    if (!decodedToken.id) return invalidToken();
+    
+    const user = await User.findById(decodedToken.id);
     const savedScore = await new Score({
       score: body.score,
       date: new Date(),
