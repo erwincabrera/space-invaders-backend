@@ -7,9 +7,17 @@ scoresRouter.get('/', async (req, res, next) => {
   try {
     const scores = await Score
       .find({})
+      .sort({score: -1})
       .populate('user', { username: 1 });
 
-    res.json(scores);
+    const highScoresUnique = [];
+    scores.forEach(score => {
+      if (!highScoresUnique.some(s => s.user.username === score.user.username)) {
+        highScoresUnique.push(score);
+      }
+    })
+
+    res.json(highScoresUnique);
 
   } catch(err) {
     next(err);
