@@ -1,8 +1,0 @@
-POST http://localhost:3001/api/scores/
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImZvbyIsImlkIjoiNWZjYjJjYzU2YzIyNGMzODY4N2I0NzUxIiwiaWF0IjoxNjA3MTUwODEyfQ.HGzLUaAtDoQyhhg6Js-2Oro9QldjApMKpwuK-xTPPt4
-
-{
-    "score": 100,
-    "userId": "5fcb2cc56c224c38687b4751"
-}

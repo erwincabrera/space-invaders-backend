@@ -1,2 +1,0 @@
-GET http://localhost:3001/api/scores/
-Content-Type: application/json
