@@ -21,7 +21,6 @@ usersRouter.post("/", (req, res, next) => {
 
   const saveUser = (passwordHash) => new User({
     username: body.username,
-    name: body.name,
     passwordHash
   }).save()
 
