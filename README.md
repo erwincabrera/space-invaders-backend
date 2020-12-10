@@ -1,6 +1,8 @@
 ![Node.js CI](https://github.com/erwincabrera/space-invaders-backend/workflows/Node.js%20CI/badge.svg)
 
-The backend code for the [Space Invaders app](https://github.com/erwincabrera/space-invaders).
+A full stack app based on the classic _Space Invaders_ game. Features audio, user login and logout, and a high scores database.  
+
+This repository contains the backend code. The repository for the frontend can be found [here](https://github.com/erwincabrera/space-invaders).
 
 The following tools were used in the implementation:  
 - JavaScript
