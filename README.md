@@ -8,7 +8,7 @@ A full stack app based on the classic _Space Invaders_ game. Features audio, use
 
 This repository contains the backend code. The repository for the frontend can be found [here](https://github.com/erwincabrera/space-invaders).
 
-The following tools were used in the implementation:  
+The following tools were used in the implementation:
 
 - JavaScript
 - Node.js
