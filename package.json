@@ -14,20 +14,16 @@
   "author": "Erwin Cabrera",
   "license": "ISC",
   "dependencies": {
-    "bcrpyt": "^2.0.0",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.15",
-    "mongoose-unique-validator": "^2.0.3"
+    "mongoose": "^6.6.5",
+    "mongoose-unique-validator": "^3.1.0"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
-    "nodemon": "^2.0.6"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "jest": "^29.2.1",
+    "nodemon": "^2.0.20"
   }
 }

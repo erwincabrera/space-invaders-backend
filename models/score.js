@@ -5,12 +5,7 @@ const url = process.env.MONGODB_URI
 
 logger.info('connecting to mongoDB');
 
-mongoose.connect(url, { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true, 
-  useFindAndModify: false, 
-  useCreateIndex: true 
-}).then(res => {
+mongoose.connect(url).then(res => {
   logger.info('connected to mongoDB')
 }).catch(err => {
   logger.error('error connecting to mongoDB: ', err.message)
