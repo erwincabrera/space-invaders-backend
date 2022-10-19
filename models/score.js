@@ -1,37 +1,40 @@
 const mongoose = require("mongoose");
 const logger = require("../utils/logger");
 
-const url = process.env.MONGODB_URI
+const url = process.env.MONGODB_URI;
 
-logger.info('connecting to mongoDB');
+logger.info("connecting to mongoDB");
 
-mongoose.connect(url).then(res => {
-  logger.info('connected to mongoDB')
-}).catch(err => {
-  logger.error('error connecting to mongoDB: ', err.message)
-})
+mongoose
+  .connect(url)
+  .then((res) => {
+    logger.info("connected to mongoDB");
+  })
+  .catch((err) => {
+    logger.error("error connecting to mongoDB: ", err.message);
+  });
 
 const scoreSchema = new mongoose.Schema({
   score: {
     type: Number,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }
+    ref: "User",
+  },
 });
 
-scoreSchema.set('toJSON', {
+scoreSchema.set("toJSON", {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString(),
-    delete returnedObject._id
-    delete returnedObject.__v
-  }
-})
+    (returnedObject.id = returnedObject._id.toString()),
+      delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
-module.exports = mongoose.model('Score', scoreSchema)
+module.exports = mongoose.model("Score", scoreSchema);
