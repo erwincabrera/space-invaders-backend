@@ -7,7 +7,7 @@ logger.info("connecting to mongoDB");
 
 mongoose
   .connect(url)
-  .then((res) => {
+  .then((_res) => {
     logger.info("connected to mongoDB");
   })
   .catch((err) => {
