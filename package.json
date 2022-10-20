@@ -7,10 +7,7 @@
     "start": "cross-env NODE_ENV=production node src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "lint": "eslint .",
-    "tar": "git archive --format tar --output ./deploy.tar main",
-    "tar-append": "tar --file=./deploy.tar --append .env*",
-    "deploy": "yarn tar && yarn tar-append && caprover deploy -t ./deploy.tar"
+    "lint": "eslint ."
   },
   "author": "Erwin Cabrera",
   "license": "ISC",
