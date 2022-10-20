@@ -1,10 +1,10 @@
 # Space Invaders
 
-![Node.js CI](https://github.com/erwincabrera/space-invaders-backend/workflows/Node.js%20CI/badge.svg)
+[![Pipeline](https://github.com/erwincabrera/space-invaders-backend/actions/workflows/pipeline.yml/badge.svg)](https://github.com/erwincabrera/space-invaders-backend/actions/workflows/pipeline.yml)
 
 [Live Demo](https://spaceinvaders.xyz)
 
-A full stack app based on the classic _Space Invaders_ game. Features audio, user login and logout, and a high scores database.  
+A full stack app based on the classic _Space Invaders_ game. Features audio, user login and logout, and a high scores database.
 
 This repository contains the backend code. The repository for the frontend can be found [here](https://github.com/erwincabrera/space-invaders).
 
