@@ -1,3 +1,4 @@
+const config = require("../utils/config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const loginRouter = require("express").Router();
@@ -23,7 +24,7 @@ loginRouter.post("/", async (req, res, next) => {
         username: user.username,
         id: user._id,
       },
-      process.env.SECRET,
+      config.SECRET,
     );
 
     res.status(200).send({

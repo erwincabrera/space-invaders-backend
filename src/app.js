@@ -1,3 +1,4 @@
+const config = require("./utils/config");
 const express = require("express");
 const cors = require("cors");
 const usersRouter = require("./controllers/users");
@@ -7,12 +8,10 @@ const loginRouter = require("./controllers/login");
 const mongoose = require("mongoose");
 const logger = require("./utils/logger");
 
-const url = process.env.MONGODB_URI;
-
 logger.info("connecting to mongoDB");
 
 mongoose
-  .connect(url)
+  .connect(config.MONGODB_URI)
   .then((_res) => {
     logger.info("connected to mongoDB");
   })

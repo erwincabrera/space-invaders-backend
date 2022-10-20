@@ -1,3 +1,4 @@
+const config = require("../utils/config");
 const scoresRouter = require("express").Router();
 const Score = require("../models/score");
 const User = require("../models/user");
@@ -68,7 +69,7 @@ scoresRouter.post("/", async (req, res, next) => {
 
     if (!token) return invalidToken();
 
-    const decodedToken = jwt.verify(token, process.env.SECRET);
+    const decodedToken = jwt.verify(token, config.SECRET);
     if (!decodedToken.id) return invalidToken();
 
     const user = await User.findById(decodedToken.id);
