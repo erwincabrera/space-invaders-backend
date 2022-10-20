@@ -33,8 +33,10 @@ jobs:
           cwd: "./"
           files: |
             src/
-            captain-definition
             Dockerfile
+            package.json
+            yarn.lock
+            captain-definition
           outPath: deploy.tar
 
       # - if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
