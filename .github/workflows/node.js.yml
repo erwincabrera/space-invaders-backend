@@ -1,28 +1,44 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+# Reference: https://caprover.com/docs/ci-cd-integration/deploy-from-github.html
 
 name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main, develop]
+    types: [opened, synchronize]
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: yarn --frozen-lockfile
-    - run: yarn test
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn --frozen-lockfile
+      - run: yarn test
+      
+      - if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+        uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          cwd: "./"
+          files: |
+            src/
+            captain-definition
+          outPath: deploy.tar
+
+      - name: Deploy App to CapRover
+          uses: caprover/deploy-from-github@v1.0.1
+          with:
+            server: '${{ secrets.CAPROVER_SERVER }}'
+            app: '${{ secrets.APP_NAME }}'
+            token: '${{ secrets.APP_TOKEN }}'
