@@ -9,22 +9,48 @@ const BASE_URL = "/api/users";
 
 describe("users API", () => {
   describe("create", () => {
-    test("response contains correct fields", async () => {
+    describe("valid request", () => {
+      let usersBefore;
+      let response;
       const testUser = {
         username: "test",
         password: "asdf123",
       };
 
-      const { body } = await api
-        .post(BASE_URL)
-        .send(testUser)
-        .expect(201)
-        .expect("Content-Type", /application\/json/);
+      beforeAll(async () => {
+        usersBefore = await User.find({});
+        response = await api
+          .post(BASE_URL)
+          .send(testUser)
+          .expect(201)
+          .expect("Content-Type", /application\/json/);
+      });
 
-      expect(body).toHaveProperty("id");
-      expect(body.username).toEqual(testUser.username);
-      expect(Array.isArray(body.scores)).toBe(true);
-      expect(body.scores.length).toBe(0);
+      test("user gets stored", async () => {
+        const usersActual = await User.find({});
+        expect(usersActual.length).toEqual(usersBefore.length + 1);
+
+        const savedUser = usersActual.find(
+          (u) => u.username === testUser.username,
+        );
+
+        expect(savedUser).toBeDefined();
+        expect(Array.isArray(savedUser.scores)).toBe(true);
+        expect(savedUser.scores.length).toBe(0);
+      });
+
+      test("response contains correct fields", async () => {
+        const { body } = response;
+
+        expect(body).toHaveProperty("id");
+        expect(body.username).toEqual(testUser.username);
+        expect(Array.isArray(body.scores)).toBe(true);
+        expect(body.scores.length).toBe(0);
+      });
+
+      test("cannot create another user with the same username", async () => {
+        await api.post(BASE_URL).send(testUser).expect(400);
+      });
     });
 
     test("request without password is rejected", async () => {
