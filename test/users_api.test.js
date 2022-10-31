@@ -67,12 +67,9 @@ describe("users API", () => {
     ];
 
     beforeAll(async () => {
-      for (let i = 0; i < testUsers.length; i++) {
-        const { body } = await api
-          .post(BASE_URL)
-          .send(testUsers[i])
-          .expect(201);
-        testUsers[i].id = body.id;
+      for (const testUser of testUsers) {
+        const { body } = await api.post(BASE_URL).send(testUser).expect(201);
+        testUser.id = body.id;
       }
     });
 
@@ -85,10 +82,8 @@ describe("users API", () => {
       expect(Array.isArray(body)).toBe(true);
       expect(body.length).toEqual(testUsers.length);
 
-      for (let i = 0; i < testUsers.length; i++) {
-        const testUser = testUsers[i];
+      for (const testUser of testUsers) {
         const actual = body.find((b) => b.username === testUser.username);
-
         expect(actual).toBeDefined();
         expect(actual.id).toEqual(testUser.id);
         expect(actual.username).toEqual(testUser.username);
