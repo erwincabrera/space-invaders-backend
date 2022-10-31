@@ -15,21 +15,33 @@ usersRouter.get("/", async (req, res, next) => {
   }
 });
 
-usersRouter.post("/", (req, res, next) => {
+usersRouter.post("/", async (req, res, next) => {
   const body = req.body;
   const saltRounds = 10;
 
-  const saveUser = (passwordHash) =>
-    new User({
+  if (body.username == null) {
+    return res.status(400).json({
+      error: "Username is required",
+    });
+  }
+
+  if (body.password == null) {
+    return res.status(400).json({
+      error: "Password is required",
+    });
+  }
+
+  try {
+    const passwordHash = await bcrypt.hash(body.password, saltRounds);
+    const savedUser = await new User({
       username: body.username,
       passwordHash,
     }).save();
 
-  bcrypt
-    .hash(body.password, saltRounds)
-    .then(saveUser)
-    .then((savedUser) => res.json(savedUser))
-    .catch(next);
+    return res.status(201).json(savedUser);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = usersRouter;
