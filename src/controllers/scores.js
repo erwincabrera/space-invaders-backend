@@ -25,26 +25,17 @@ scoresRouter.get("/", async (req, res, next) => {
   }
 });
 
-scoresRouter.get("/:id", (req, res, next) => {
-  Score.findById(req.params.id)
-    .then((score) => {
-      if (score) {
-        res.json(score);
-      } else {
-        res.status(404).end();
-      }
-    })
-    .catch((err) => next(err));
-});
-
-scoresRouter.delete("/:id", (req, res, next) => {
-  Score.findByIdAndRemove(req.params.id)
-    .then((_) => {
-      res.status(204).end();
-    })
-    .catch((err) => next(err));
-
-  res.status(204).end();
+scoresRouter.get("/:id", async (req, res, next) => {
+  try {
+    const score = await Score.findById(req.params.id);
+    if (score) {
+      res.json(score);
+    } else {
+      res.status(404).end();
+    }
+  } catch (err) {
+    next(err);
+  }
 });
 
 const getTokenFrom = (req) => {
@@ -82,7 +73,7 @@ scoresRouter.post("/", async (req, res, next) => {
     user.scores = [...user.scores, savedScore._id];
     await user.save();
 
-    res.json(savedScore);
+    return res.status(201).json(savedScore);
   } catch (err) {
     next(err);
   }
