@@ -44,8 +44,6 @@ describe("users API", () => {
 
         expect(body).toHaveProperty("id");
         expect(body.username).toEqual(testUser.username);
-        expect(Array.isArray(body.scores)).toBe(true);
-        expect(body.scores.length).toBe(0);
       });
 
       test("cannot create another user with the same username", async () => {
@@ -113,7 +111,6 @@ describe("users API", () => {
         expect(actual).toBeDefined();
         expect(actual.id).toEqual(testUser.id);
         expect(actual.username).toEqual(testUser.username);
-        expect(Array.isArray(actual.scores)).toBe(true);
       }
     });
 
