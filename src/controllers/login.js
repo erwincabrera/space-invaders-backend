@@ -7,6 +7,19 @@ const User = require("../models/user");
 loginRouter.post("/", async (req, res, next) => {
   try {
     const body = req.body;
+
+    if (body.password == null) {
+      return res.status(400).json({
+        error: "Password is required",
+      });
+    }
+
+    if (body.username == null) {
+      return res.status(400).json({
+        error: "Username is required",
+      });
+    }
+
     const user = await User.findOne({ username: body.username });
     const isCorrectPassword =
       user == undefined
