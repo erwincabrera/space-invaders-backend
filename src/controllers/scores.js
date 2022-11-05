@@ -10,16 +10,18 @@ scoresRouter.get("/", async (req, res, next) => {
       .sort({ score: -1 })
       .populate("user", { username: 1 });
 
-    const highScoresUnique = [];
-    scores.forEach((score) => {
-      if (
-        !highScoresUnique.some((s) => s.user.username === score.user.username)
-      ) {
-        highScoresUnique.push(score);
-      }
-    });
-
-    res.json(highScoresUnique);
+    if (req.query.summary === "T") {
+      const highScoresUnique = [];
+      scores.forEach((score) => {
+        if (
+          !highScoresUnique.some((s) => s.user.username === score.user.username)
+        ) {
+          highScoresUnique.push(score);
+        }
+      });
+      return res.json(highScoresUnique);
+    }
+    res.json(scores);
   } catch (err) {
     next(err);
   }
