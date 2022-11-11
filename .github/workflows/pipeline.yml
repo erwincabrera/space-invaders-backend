@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn --frozen-lockfile
-      - run: yarn test
+      # - run: yarn test
 
       - if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
         uses: a7ul/tar-action@v1.1.0
