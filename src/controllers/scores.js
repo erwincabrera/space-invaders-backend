@@ -5,26 +5,7 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 scoresRouter.get("/", async (req, res, next) => {
-  try {
-    const scores = await Score.find({})
-      .sort({ score: -1 })
-      .populate("user", { username: 1 });
-
-    if (req.query.summary === "T") {
-      const highScoresUnique = [];
-      scores.forEach((score) => {
-        if (
-          !highScoresUnique.some((s) => s.user.username === score.user.username)
-        ) {
-          highScoresUnique.push(score);
-        }
-      });
-      return res.json(highScoresUnique);
-    }
-    res.json(scores);
-  } catch (err) {
-    next(err);
-  }
+  next("error");
 });
 
 scoresRouter.get("/:id", async (req, res, next) => {
