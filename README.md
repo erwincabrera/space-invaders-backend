@@ -1,6 +1,7 @@
 # Space Invaders Backend
 
 [![Pipeline](https://github.com/erwincabrera/space-invaders-backend/actions/workflows/pipeline.yml/badge.svg)](https://github.com/erwincabrera/space-invaders-backend/actions/workflows/pipeline.yml)
+[![Health Check](https://github.com/erwincabrera/space-invaders-backend/actions/workflows/health.yml/badge.svg)](https://github.com/erwincabrera/space-invaders-backend/actions/workflows/health.yml)
 
 [Live Demo](https://spaceinvaders.xyz)
 
