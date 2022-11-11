@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Request scores
-        uses: jtalk/url-health-check-action@61a0e49
+        uses: jtalk/url-health-check-action@61a0e49fff5cde3773b0bbe069d4ebbd04d24f07
         with:
           url: https://spaceinvaders.xyz/api/scores
           max-attempts: 3
