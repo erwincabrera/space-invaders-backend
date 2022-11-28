@@ -2,7 +2,7 @@ const config = require("../utils/config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const loginRouter = require("express").Router();
-const User = require("../models/user");
+const UserDAO = require("../dao/user");
 
 loginRouter.post("/", async (req, res, next) => {
   try {
@@ -20,7 +20,7 @@ loginRouter.post("/", async (req, res, next) => {
       });
     }
 
-    const user = await User.findOne({ username: body.username });
+    const user = await new UserDAO().findByUsername(body.username);
     const isCorrectPassword =
       user == undefined
         ? false

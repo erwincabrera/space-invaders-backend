@@ -1,14 +1,10 @@
 const usersRouter = require("express").Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
+const UserDAO = require("../dao/user");
 
 usersRouter.get("/", async (req, res, next) => {
   try {
-    const users = await User.find({}).populate("scores", {
-      score: 1,
-      date: 1,
-    });
-
+    const users = await new UserDAO().getAllUsers();
     res.json(users);
   } catch (err) {
     next(err);
@@ -32,7 +28,9 @@ usersRouter.post("/", async (req, res, next) => {
       });
     }
 
-    const existingUser = await User.findOne({ username: body.username });
+    const userDAO = new UserDAO();
+
+    const existingUser = await userDAO.findByUsername(body.username);
     if (existingUser) {
       return res.status(400).json({
         error: "Username already taken",
@@ -40,10 +38,10 @@ usersRouter.post("/", async (req, res, next) => {
     }
 
     const passwordHash = await bcrypt.hash(body.password, saltRounds);
-    const savedUser = await new User({
+    const savedUser = await userDAO.saveNewUser({
       username: body.username,
       passwordHash,
-    }).save();
+    });
 
     return res.status(201).json(savedUser);
   } catch (err) {
