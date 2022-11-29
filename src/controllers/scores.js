@@ -1,14 +1,12 @@
 const config = require("../utils/config");
 const scoresRouter = require("express").Router();
-const Score = require("../models/score");
-const User = require("../models/user");
+const ScoreDAO = require("../dao/score");
+const UserDAO = require("../dao/user");
 const jwt = require("jsonwebtoken");
 
 scoresRouter.get("/", async (req, res, next) => {
   try {
-    const scores = await Score.find({})
-      .sort({ score: -1 })
-      .populate("user", { username: 1 });
+    const scores = await new ScoreDAO().getAllScores();
 
     if (req.query.summary === "T") {
       const highScoresUnique = [];
@@ -29,7 +27,7 @@ scoresRouter.get("/", async (req, res, next) => {
 
 scoresRouter.get("/:id", async (req, res, next) => {
   try {
-    const score = await Score.findById(req.params.id);
+    const score = await new ScoreDAO().getScore(req.params.id);
     if (score) {
       res.json(score);
     } else {
@@ -65,12 +63,11 @@ scoresRouter.post("/", async (req, res, next) => {
     const decodedToken = jwt.verify(token, config.SECRET);
     if (!decodedToken.id) return invalidToken();
 
-    const user = await User.findById(decodedToken.id);
-    const savedScore = await new Score({
+    const user = await new UserDAO().getUser(decodedToken.id);
+    const savedScore = await new ScoreDAO().saveNewScore({
       score: body.score,
-      date: new Date(),
-      user: user._id,
-    }).save();
+      userId: user._id,
+    });
 
     user.scores = [...user.scores, savedScore._id];
     await user.save();

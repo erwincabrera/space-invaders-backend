@@ -18,6 +18,10 @@ class UserDAO {
   async findByUsername(username) {
     return User.findOne({ username });
   }
+
+  async getUser(id) {
+    return User.findById(id);
+  }
 }
 
 module.exports = UserDAO;
