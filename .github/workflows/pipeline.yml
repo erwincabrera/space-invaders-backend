@@ -31,12 +31,15 @@ jobs:
       - run: yarn test
 
       - if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+        run: yarn build
+
+      - if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
         uses: a7ul/tar-action@v1.1.0
         with:
           command: c
           cwd: "./"
           files: |
-            src/
+            build/
             Dockerfile
             package.json
             yarn.lock
