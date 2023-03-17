@@ -8,6 +8,7 @@ on:
   pull_request:
     branches: [main, develop]
     types: [opened, synchronize]
+  workflow_dispatch:
 
 env:
   TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
